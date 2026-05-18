@@ -8,17 +8,20 @@ export default function About() {
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32 items-center">
         <div>
           <h2 className="font-display text-4xl md:text-5xl font-bold uppercase mb-8">
-            Behind the <span className="text-brand">Code</span>
+            Engineering <span className="text-brand">Leadership</span>
           </h2>
-          <div className="space-y-6 text-lg font-light opacity-80 leading-relaxed italic">
-            <p>
-              I'm a software craftsman based in the digital ether, focused on building interfaces that feel as good as they look.
+          <div className="space-y-6 text-base md:text-lg font-light opacity-80 leading-relaxed">
+            <p className="italic">
+              I lead enterprise Quality Engineering and delivery transformation initiatives focused on scalability, modernization, and operational excellence across Healthcare, BFSI/FinTech, Energy, EdTech, and E-commerce.
             </p>
-            <p>
-              With a background in both engineering and design, I specialize in bridging the gap between pixel-perfect aesthetics and robust technical architecture.
+            <p className="font-normal opacity-90">
+              With 15+ years of experience, I’ve built and scaled QE practices, driven automation-led transformation programs, established governance models and Centers of Excellence, and enabled GTM strategy through solution engineering and strategic partnerships.
             </p>
-            <p>
-              Currently exploring: Large Language Models, Generative Art, and High-Performance Web Graphics.
+            <p className="font-normal opacity-90">
+              My focus is on helping organizations accelerate delivery, improve release predictability, reduce cost of quality, and build high-performing engineering ecosystems through intelligent automation, AI-assisted engineering practices, and measurable business outcomes.
+            </p>
+            <p className="pt-8 mt-8 border-t border-ink/10 text-sm md:text-base font-medium text-ink/60 leading-relaxed">
+              Delivered automation-led transformation initiatives achieving 40%+ reduction in regression cycles and improved release predictability across enterprise programs.
             </p>
           </div>
           

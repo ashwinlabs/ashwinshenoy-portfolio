@@ -26,25 +26,25 @@ app.post("/api/chat", async (req, res) => {
   try {
     const { message, history } = req.body;
     
-    // Using the 2.0 Flash model which is fast and reliable
-    const model = ai.getGenerativeModel({ 
-      model: "gemini-2.0-flash",
-      systemInstruction: `You are the AI Assistant for Ashwin Shenoy. You help visitors learn about Ashwin's background, projects, and skills. 
-        Ashwin is a software engineer passionate about web development, AI, and building useful tools.
+    // Using the recommended Gemini 3 model and Antigravity SDK patterns
+    const chat = ai.chats.create({
+      model: "gemini-3-flash-preview",
+      config: {
+        systemInstruction: `You are the AI Assistant for Ashwin Shenoy. You help visitors learn about Ashwin's background, projects, and leadership in engineering. 
+        Ashwin is a Quality Engineering, Delivery, and AI Transformation leader driving enterprise-scale modernization with 15+ years of experience.
+        He specializes in Healthcare, BFSI/FinTech, Energy, EdTech, and E-commerce domains.
+        His focus is on scalability, operational excellence, and AI-assisted engineering practices.
         If you don't know something specific about Ashwin, be polite and offer to have them reach out to him directly.
-        Keep responses concise and helpful.`,
-    });
-
-    const chat = model.startChat({
+        Keep responses concise and professional.`,
+      },
       history: (history || []).map((h: any) => ({
         role: h.role,
         parts: h.parts,
       })),
     });
 
-    const result = await chat.sendMessage(message);
-    const response = await result.response;
-    res.json({ text: response.text() });
+    const response = await chat.sendMessage({ message });
+    res.json({ text: response.text });
   } catch (error: any) {
     console.error("Gemini Error:", error);
     res.status(500).json({ error: "Failed to get AI response" });

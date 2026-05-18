@@ -1,9 +1,9 @@
 import { motion } from "motion/react";
 
 const SKILLS = [
-  "Typescript", "React", "Node.js", "Gemini AI", "Next.js", 
-  "Tailwind CSS", "Framer Motion", "Three.js", "PostgreSQL", 
-  "Docker", "Vite", "D3.js", "Python"
+  "QE Strategy", "Enterprise Delivery", "Test Automation", "AI Engineering", 
+  "Process Optimization", "Cloud Architecture", "DevOps", "Scalability", 
+  "Governance", "Team Leadership", "Modernization", "CI/CD"
 ];
 
 export default function Skills() {
@@ -11,7 +11,7 @@ export default function Skills() {
     <section className="py-24 border-t border-ink/5 bg-paper/50">
       <div className="px-6 md:px-24 mb-12">
         <h2 className="font-display text-2xl font-bold uppercase tracking-widest opacity-40">
-          Tecnology Stack
+          Core Expertise
         </h2>
       </div>
       
@@ -19,7 +19,7 @@ export default function Skills() {
       <div className="overflow-hidden flex bg-brand py-8 text-paper rotate-[-1deg] w-[110%] -ml-[5%]">
         <motion.div 
           animate={{ x: [0, -1000] }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
           className="flex gap-16 whitespace-nowrap px-8 shrink-0"
         >
           {SKILLS.concat(SKILLS).map((skill, i) => (
@@ -32,10 +32,10 @@ export default function Skills() {
 
       <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 px-6 md:px-24 mt-24">
         {[
-          { label: "Frontend", level: "Expert" },
-          { label: "AI Integration", level: "Advanced" },
-          { label: "Visual Design", level: "Fluid" },
-          { label: "Architectures", level: "Scalable" }
+          { label: "Transformation", level: "Enterprise" },
+          { label: "Automation", level: "Scalable" },
+          { label: "Delivery", level: "Seamless" },
+          { label: "Leadership", level: "Strategic" }
         ].map((item, i) => (
           <div key={i} className="border-l border-ink/10 pl-6 py-4">
             <span className="font-mono text-[10px] uppercase opacity-40 block mb-2">{item.level}</span>

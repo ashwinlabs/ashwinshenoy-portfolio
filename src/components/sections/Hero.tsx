@@ -11,7 +11,7 @@ export default function Hero() {
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <span className="font-mono text-sm tracking-widest uppercase opacity-60 mb-6 block">
-            Software Engineer & Creative Coder
+            QUALITY ENGINEERING | DELIVERY | AI TRANSFORMATION
           </span>
           <h1 className="font-display text-[15vw] md:text-[10vw] leading-[0.85] font-black uppercase tracking-tighter mb-8">
             Ashwin <br />
@@ -26,7 +26,7 @@ export default function Hero() {
             transition={{ delay: 0.5, duration: 1 }}
             className="max-w-md text-lg md:text-xl font-light leading-relaxed opacity-80"
           >
-            Building high-performance web experiences and exploring the intersection of AI and human creativity.
+            Driving enterprise-scale Quality Engineering transformation, delivery excellence, and AI-enabled modernization.
           </motion.p>
 
           <motion.div
