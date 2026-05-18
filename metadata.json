@@ -1,0 +1,6 @@
+{
+  "name": "Ashwin's Portfolio",
+  "description": "A high-performance, modern developer portfolio featuring an AI-powered assistant built with Gemini.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
