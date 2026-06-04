@@ -9,11 +9,13 @@ import Projects from "./components/sections/Projects";
 import About from "./components/sections/About";
 import Skills from "./components/sections/Skills";
 import AIAssistant from "./components/AIAssistant";
+import { Analytics } from "@vercel/analytics/react";
 import { motion } from "motion/react";
 
 export default function App() {
   return (
     <div className="relative selection:bg-brand selection:text-white">
+      <Analytics />
       <Navbar />
       
       <main>
