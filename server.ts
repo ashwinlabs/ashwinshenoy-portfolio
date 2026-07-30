@@ -3,6 +3,7 @@ import path from "path";
 import { createServer as createViteServer } from "vite";
 import dotenv from "dotenv";
 import chatHandler from "./api/chat.ts";
+import contactHandler from "./api/contact.ts";
 
 dotenv.config();
 
@@ -14,6 +15,11 @@ app.use(express.json());
 // AI Assistant Endpoint - Uses shared serverless function handler
 app.post("/api/chat", async (req, res) => {
   await chatHandler(req, res);
+});
+
+// Contact Email Endpoint - Uses shared serverless function handler
+app.post("/api/contact", async (req, res) => {
+  await contactHandler(req, res);
 });
 
 // Vite middleware for development

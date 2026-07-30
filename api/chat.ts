@@ -29,7 +29,7 @@ export default async function handler(req: any, res: any) {
 
 My AI Digital Twin is currently available for selected demonstrations. If you'd like to discuss Quality Engineering transformation, AI-enabled engineering, delivery strategy, or leadership opportunities, I'd be happy to connect directly.
 
-Please use the "Start a Conversation" section below or reach out via LinkedIn or email.` 
+Please use the Contact section below or connect with me via LinkedIn or email.` 
       });
     }
 

@@ -61,28 +61,44 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSend = (e: React.FormEvent) => {
+  const [sendError, setSendError] = useState("");
+
+  const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
 
     setIsSubmitting(true);
+    setSendError("");
 
     const finalTopic = useCustomTopic ? formData.customTopic : formData.topic;
-    
-    // Construct Mailto Link
-    const emailRecipient = "ashwinshenoy7@gmail.com";
-    const subjectLine = `[Inquiry] ${finalTopic} - from ${formData.name}`;
-    const emailBody = `Hi Ashwin,\n\n${formData.message}\n\nClient Contact Details:\nName: ${formData.name}\nEmail: ${formData.email}\n\nSent from ashwinshenoy.me portfolio`;
 
-    const mailtoUrl = `mailto:${emailRecipient}?subject=${encodeURIComponent(subjectLine)}&body=${encodeURIComponent(emailBody)}`;
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          topic: finalTopic,
+          message: formData.message,
+        }),
+      });
 
-    // Open mail Client
-    // We run this inside a safe timeout to show the animation
-    setTimeout(() => {
-      window.location.href = mailtoUrl;
-      setIsSubmitting(false);
+      const data = await response.json();
+
+      if (!response.ok || data.error) {
+        throw new Error(data.error || "Failed to send message.");
+      }
+
       setSubmitted(true);
-    }, 800);
+    } catch (err: any) {
+      console.error("Contact Form Submission Error:", err);
+      setSendError(err.message || "Failed to send message. Please try again or reach out directly to ashwinshenoy7@gmail.com.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const copyToClipboard = () => {
@@ -105,6 +121,8 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
     });
     setUseCustomTopic(false);
     setSubmitted(false);
+    setSendError("");
+    setErrors({});
   };
 
   return (
@@ -255,45 +273,52 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                     />
                     {errors.message && <span className="text-red-500 font-mono text-[10px] mt-1 block">{errors.message}</span>}
                   </div>
+                  {/* Send Error Alert */}
+                  {sendError && (
+                    <div className="p-3 bg-red-50 border border-red-200 rounded-[12px] text-xs text-red-600 font-sans leading-relaxed">
+                      {sendError}
+                    </div>
+                  )}
                 </div>
 
                 {/* Send Button */}
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full flex items-center justify-center gap-3 py-4 bg-ink text-paper text-sm uppercase font-display tracking-widest rounded-[16px] hover:bg-brand transition-all disabled:opacity-55 group"
+                  className="w-full flex items-center justify-center gap-3 py-4 bg-ink text-paper text-sm uppercase font-display tracking-widest rounded-[16px] hover:bg-brand transition-all disabled:opacity-55 group cursor-pointer"
                   id="submit_form_btn"
                 >
-                  <Send className={`w-4 h-4 transition-transform ${isSubmitting ? "animate-ping" : "group-hover:translate-x-1 group-hover:-translate-y-1"}`} />
-                  {isSubmitting ? "Opening Email Client..." : "Send Message"}
+                  <Send className={`w-4 h-4 transition-transform ${isSubmitting ? "animate-pulse" : "group-hover:translate-x-1 group-hover:-translate-y-1"}`} />
+                  {isSubmitting ? "Sending Message..." : "Send Message"}
                 </button>
               </form>
             ) : (
-              // Success Screen representation (after email triggers)
+              // Success Screen representation (after email sends directly)
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="text-center py-6 flex flex-col items-center justify-center space-y-6"
                 id="success_panel"
               >
-                <div className="p-4 bg-brand/10 border border-brand/20 rounded-full text-brand">
+                <div className="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-full text-emerald-600">
                   <CheckCircle className="w-12 h-12" />
                 </div>
                 
                 <div>
                   <h3 className="font-display text-2xl font-bold uppercase tracking-tight text-ink">
-                    Email Prompt Active!
+                    Message Sent Successfully!
                   </h3>
                   <p className="text-xs md:text-sm text-ink/65 mt-2 max-w-sm mx-auto">
-                    A connection prompt has been successfully configured and sent to your operating system's default email client.
+                    Thank you for reaching out{formData.name ? `, ${formData.name}` : ""}. Your message has been sent directly to Ashwin's inbox.
                   </p>
                 </div>
 
-                <div className="w-full bg-ink/5 border border-ink/8 text-left rounded-[16px] p-5 space-y-4">
-                  <p className="font-mono text-[9px] uppercase tracking-wider text-ink/50 text-center border-b border-ink/5 pb-2 font-medium">Draft Overview Details</p>
-                  <div className="space-y-1.5 text-xs text-ink/80 leading-relaxed font-sans max-h-[120px] overflow-y-auto">
+                <div className="w-full bg-ink/5 border border-ink/8 text-left rounded-[16px] p-5 space-y-3">
+                  <p className="font-mono text-[9px] uppercase tracking-wider text-ink/50 text-center border-b border-ink/5 pb-2 font-medium">Submitted Message Summary</p>
+                  <div className="space-y-1.5 text-xs text-ink/80 leading-relaxed font-sans max-h-[140px] overflow-y-auto">
+                    <p><span className="font-semibold text-ink/60">Sender:</span> {formData.name} ({formData.email})</p>
                     <p><span className="font-semibold text-ink/60">Recipient:</span> ashwinshenoy7@gmail.com</p>
-                    <p><span className="font-semibold text-ink/60">Subject:</span> [Inquiry] {useCustomTopic ? formData.customTopic : formData.topic}</p>
+                    <p><span className="font-semibold text-ink/60">Topic:</span> {useCustomTopic ? formData.customTopic : formData.topic}</p>
                     <p className="italic bg-paper/50 p-2.5 rounded-lg text-ink/75 whitespace-pre-wrap select-text">{formData.message}</p>
                   </div>
                 </div>
@@ -313,7 +338,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                     ) : (
                       <>
                         <Copy className="w-4 h-4 text-ink/60" />
-                        Copy Full Draft Content
+                        Copy Copy of Message
                       </>
                     )}
                   </button>
@@ -324,7 +349,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                       resetForm();
                       onClose();
                     }}
-                    className="flex-1 py-3 px-4 bg-ink text-paper rounded-[14px] font-mono text-[10px] uppercase font-bold hover:bg-brand transition-all"
+                    className="flex-1 py-3 px-4 bg-ink text-paper rounded-[14px] font-mono text-[10px] uppercase font-bold hover:bg-brand transition-all cursor-pointer"
                     id="close_success_btn"
                   >
                     Done & Return
