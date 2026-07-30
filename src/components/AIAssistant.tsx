@@ -68,7 +68,8 @@ export default function AIAssistant() {
               </div>
               <button 
                 onClick={() => setIsOpen(false)}
-                className="hover:bg-paper/10 p-1 rounded-full transition-colors text-paper/70 hover:text-paper"
+                className="hover:bg-paper/10 p-2 rounded-full transition-colors text-paper/70 hover:text-paper focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none"
+                aria-label="Close AI Assistant"
               >
                 <X size={18} />
               </button>
@@ -95,7 +96,7 @@ export default function AIAssistant() {
                         onClick={() => {
                           setInput(prompt);
                         }}
-                        className="text-left text-[11px] font-sans px-3 py-2 bg-white border border-ink/10 rounded-lg hover:border-brand/50 hover:text-brand transition-colors text-ink/80 font-medium"
+                        className="text-left text-[11px] font-sans px-3 py-2 bg-white border border-ink/10 rounded-lg hover:border-brand/50 hover:text-brand transition-colors text-ink/80 font-medium focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none"
                       >
                         → {prompt}
                       </button>
@@ -135,12 +136,14 @@ export default function AIAssistant() {
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleSendMessage()}
                 placeholder="Ask me something..."
-                className="flex-1 bg-paper/50 rounded-xl px-4 py-2 text-sm outline-none focus:ring-1 ring-brand/30 transition-all"
+                aria-label="Message for AI Assistant"
+                className="flex-1 bg-paper/50 rounded-xl px-4 py-2 text-sm outline-none focus:ring-1 ring-brand/30 transition-all font-sans"
               />
               <button 
                 onClick={handleSendMessage}
                 disabled={isLoading}
-                className="bg-ink text-white p-2 rounded-xl hover:bg-brand transition-colors disabled:opacity-50"
+                aria-label="Send message to AI Assistant"
+                className="bg-ink text-white p-2.5 min-w-[44px] min-h-[44px] rounded-xl hover:bg-brand transition-colors disabled:opacity-50 flex items-center justify-center focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none"
               >
                 <Send size={18} />
               </button>
@@ -153,7 +156,8 @@ export default function AIAssistant() {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => setIsOpen(!isOpen)}
-        className="bg-brand text-white p-4 rounded-full shadow-lg flex items-center justify-center relative overflow-hidden group"
+        aria-label="Toggle AI Digital Twin Assistant"
+        className="bg-brand text-white p-4 min-w-[56px] min-h-[56px] rounded-full shadow-lg flex items-center justify-center relative overflow-hidden group focus-visible:ring-2 focus-visible:ring-ink focus-visible:outline-none"
       >
         <MessageSquare size={24} />
       </motion.button>

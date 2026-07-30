@@ -21,7 +21,7 @@ export default function App() {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
   return (
-    <div className="relative selection:bg-brand selection:text-white">
+    <div className="relative selection:bg-brand selection:text-white overflow-x-hidden w-full">
       <Analytics />
       <Navbar />
       
@@ -48,8 +48,9 @@ export default function App() {
             onClick={() => setIsContactModalOpen(true)}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="px-12 py-6 bg-ink text-paper rounded-[20px] font-display text-lg md:text-xl uppercase tracking-widest hover:bg-brand transition-colors mb-16 cursor-pointer shadow-lg"
+            className="px-12 py-6 min-h-[56px] bg-ink text-paper rounded-[20px] font-display text-lg md:text-xl uppercase tracking-widest hover:bg-brand transition-colors mb-16 cursor-pointer shadow-lg focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none"
             id="start_conversation_trigger_btn"
+            aria-label="Start a conversation with Ashwin Shenoy"
           >
             Start a Conversation
           </motion.button>
@@ -62,8 +63,9 @@ export default function App() {
               rel="noopener noreferrer"
               whileHover={{ scale: 1.1, y: -2 }}
               whileTap={{ scale: 0.95 }}
-              className="p-4 rounded-full border border-ink/10 hover:border-brand/40 text-ink/60 hover:text-brand bg-ink/5 hover:bg-brand/5 transition-all flex items-center justify-center group"
+              className="p-4 rounded-full border border-ink/10 hover:border-brand/40 text-ink/60 hover:text-brand bg-ink/5 hover:bg-brand/5 transition-all flex items-center justify-center group focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none"
               title="LinkedIn"
+              aria-label="Ashwin Shenoy on LinkedIn"
               id="contact_linkedin"
             >
               <Linkedin className="w-6 h-6 transition-transform group-hover:scale-105" />
@@ -75,8 +77,9 @@ export default function App() {
               rel="noopener noreferrer"
               whileHover={{ scale: 1.1, y: -2 }}
               whileTap={{ scale: 0.95 }}
-              className="p-4 rounded-full border border-ink/10 hover:border-brand/40 text-ink/60 hover:text-brand bg-ink/5 hover:bg-brand/5 transition-all flex items-center justify-center group"
+              className="p-4 rounded-full border border-ink/10 hover:border-brand/40 text-ink/60 hover:text-brand bg-ink/5 hover:bg-brand/5 transition-all flex items-center justify-center group focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none"
               title="YouTube"
+              aria-label="Ashwin Shenoy on YouTube"
               id="contact_youtube"
             >
               <Youtube className="w-6 h-6 transition-transform group-hover:scale-105" />
@@ -88,8 +91,9 @@ export default function App() {
               rel="noopener noreferrer"
               whileHover={{ scale: 1.1, y: -2 }}
               whileTap={{ scale: 0.95 }}
-              className="p-4 rounded-full border border-ink/10 hover:border-brand/40 text-ink/60 hover:text-brand bg-ink/5 hover:bg-brand/5 transition-all flex items-center justify-center group"
+              className="p-4 rounded-full border border-ink/10 hover:border-brand/40 text-ink/60 hover:text-brand bg-ink/5 hover:bg-brand/5 transition-all flex items-center justify-center group focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none"
               title="Instagram"
+              aria-label="Ashwin Shenoy on Instagram"
               id="contact_instagram"
             >
               <Instagram className="w-6 h-6 transition-transform group-hover:scale-105" />
@@ -99,18 +103,19 @@ export default function App() {
               href="mailto:ashwinshenoy7@gmail.com"
               whileHover={{ scale: 1.1, y: -2 }}
               whileTap={{ scale: 0.95 }}
-              className="p-4 rounded-full border border-ink/10 hover:border-brand/40 text-ink/60 hover:text-brand bg-ink/5 hover:bg-brand/5 transition-all flex items-center justify-center group"
-              title="Gmail"
+              className="p-4 rounded-full border border-ink/10 hover:border-brand/40 text-ink/60 hover:text-brand bg-ink/5 hover:bg-brand/5 transition-all flex items-center justify-center group focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none"
+              title="Email"
+              aria-label="Send email to Ashwin Shenoy"
               id="contact_gmail"
             >
               <Mail className="w-6 h-6 transition-transform group-hover:scale-105" />
             </motion.a>
           </div>
           
-          <div className="mt-32 w-full flex justify-between items-center font-mono text-[10px] uppercase opacity-30">
+          <div className="mt-32 w-full flex flex-col sm:flex-row justify-between items-center gap-2 font-mono text-[10px] uppercase opacity-40">
             <span>© 2026 ASHWIN SHENOY</span>
             <span>BUILT WITH GOOGLE AI STUDIO</span>
-            <span>LOCAL TIME 16:31 Z</span>
+            <span>EXECUTIVE PORTFOLIO</span>
           </div>
         </section>
       </main>
