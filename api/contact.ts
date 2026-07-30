@@ -39,7 +39,22 @@ export default async function handler(req: any, res: any) {
       }),
     });
 
-    const data = await response.json();
+    const rawText = await response.text();
+    console.log(`Web3Forms API HTTP Status: ${response.status}`, `Raw Response: ${rawText}`);
+
+    let data: any;
+    try {
+      data = JSON.parse(rawText);
+    } catch (parseError) {
+      console.error("Failed to parse Web3Forms response as JSON:", {
+        status: response.status,
+        rawText,
+        parseError,
+      });
+      return res.status(400).json({
+        error: `Web3Forms API returned non-JSON response (HTTP ${response.status}): ${rawText}`,
+      });
+    }
 
     if (response.ok && data.success) {
       return res.status(200).json({ success: true, message: "Message sent successfully." });
