@@ -27,10 +27,10 @@ export default function Hero() {
               className="max-w-xl space-y-3"
             >
               <p className="text-lg md:text-xl font-medium tracking-tight text-ink">
-                Quality Engineering • Solution Strategy • AI-Enabled Engineering
+                Quality Engineering • Solution Strategy • AI Transformation
               </p>
               <p className="text-sm md:text-base font-light leading-relaxed opacity-75">
-                Driving enterprise Quality Engineering practice building, delivery excellence, and AI-enabled modernization across global organizations.
+                Helping enterprises modernize Quality Engineering, accelerate delivery, and build AI-enabled engineering organizations.
               </p>
             </motion.div>
 
