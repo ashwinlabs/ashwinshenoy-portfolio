@@ -10,24 +10,29 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          <span className="font-mono text-sm tracking-widest uppercase opacity-60 mb-6 block">
-            QUALITY ENGINEERING | DELIVERY | AI TRANSFORMATION
-          </span>
-          <h1 className="font-display text-[15vw] md:text-[10vw] leading-[0.85] font-black uppercase tracking-tighter mb-8">
-            Ashwin <br />
-            <span className="text-brand">Shenoy</span>
-          </h1>
-        </motion.div>
+            <span className="font-mono text-xs md:text-sm tracking-widest uppercase text-brand font-medium mb-6 block">
+              ENGINEERING PRACTICE LEADER
+            </span>
+            <h1 className="font-display text-[14vw] md:text-[9.5vw] leading-[0.85] font-black uppercase tracking-tighter mb-8">
+              Ashwin <br />
+              <span className="text-brand">Shenoy</span>
+            </h1>
+          </motion.div>
 
-        <div className="flex flex-col md:flex-row justify-between items-end gap-8">
-          <motion.p 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5, duration: 1 }}
-            className="max-w-md text-lg md:text-xl font-light leading-relaxed opacity-80"
-          >
-            Driving enterprise-scale Quality Engineering transformation, delivery excellence, and AI-enabled modernization.
-          </motion.p>
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5, duration: 1 }}
+              className="max-w-xl space-y-3"
+            >
+              <p className="text-lg md:text-xl font-medium tracking-tight text-ink">
+                Quality Engineering • Solution Strategy • AI-Enabled Engineering
+              </p>
+              <p className="text-sm md:text-base font-light leading-relaxed opacity-75">
+                Driving enterprise Quality Engineering practice building, delivery excellence, and AI-enabled modernization across global organizations.
+              </p>
+            </motion.div>
 
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -35,10 +40,10 @@ export default function Hero() {
             transition={{ delay: 0.8 }}
           >
             <a 
-              href="#projects" 
+              href="#initiatives" 
               className="flex items-center gap-2 group text-brand font-medium text-lg"
             >
-              View Projects 
+              Transformation Initiatives
               <ArrowDownRight className="group-hover:translate-x-1 group-hover:translate-y-1 transition-transform" />
             </a>
           </motion.div>

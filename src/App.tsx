@@ -7,6 +7,8 @@ import Navbar from "./components/layout/Navbar";
 import Hero from "./components/sections/Hero";
 import Projects from "./components/sections/Projects";
 import About from "./components/sections/About";
+import LeadershipPhilosophy from "./components/sections/LeadershipPhilosophy";
+import ImpactHighlights from "./components/sections/ImpactHighlights";
 import Skills from "./components/sections/Skills";
 import AIAssistant from "./components/AIAssistant";
 import ContactModal from "./components/ContactModal";
@@ -26,22 +28,27 @@ export default function App() {
       <main>
         <Hero />
         <About />
+        <LeadershipPhilosophy />
+        <ImpactHighlights />
         <Projects />
         <Skills />
         
-        {/* Footer info from Recipe 1 */}
+        {/* Contact Section */}
         <section id="contact" className="py-32 px-6 md:px-24 border-t border-ink/10 flex flex-col items-center text-center">
-          <span className="font-mono text-[10px] uppercase tracking-widest opacity-40 mb-8 block">
-            Got a vision?
+          <span className="font-mono text-xs uppercase tracking-widest text-brand font-medium mb-6 block">
+            Initiate Advisory & Leadership Engagement
           </span>
-          <h2 className="font-display text-6xl md:text-8xl font-black uppercase tracking-tighter mb-12">
-            Let's build <br/> the <span className="text-brand">future</span>.
+          <h2 className="font-display text-4xl md:text-7xl font-bold uppercase tracking-tight mb-8 max-w-4xl leading-[0.95]">
+            Let's Build Better <br/> <span className="text-brand">Engineering Organizations</span>
           </h2>
+          <p className="max-w-2xl text-sm md:text-base font-light text-ink/75 leading-relaxed mb-12 font-sans">
+            Whether you're looking to modernize Quality Engineering, accelerate delivery, build AI-enabled engineering capabilities, establish engineering governance, or drive enterprise transformation, I'd welcome the opportunity to connect.
+          </p>
           <motion.button
             onClick={() => setIsContactModalOpen(true)}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="px-12 py-6 bg-ink text-paper rounded-[20px] font-display text-xl uppercase tracking-widest hover:bg-brand transition-colors mb-16 cursor-pointer"
+            className="px-12 py-6 bg-ink text-paper rounded-[20px] font-display text-lg md:text-xl uppercase tracking-widest hover:bg-brand transition-colors mb-16 cursor-pointer shadow-lg"
             id="start_conversation_trigger_btn"
           >
             Start a Conversation

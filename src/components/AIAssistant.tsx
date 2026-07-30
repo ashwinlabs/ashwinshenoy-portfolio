@@ -63,12 +63,12 @@ export default function AIAssistant() {
             {/* Header */}
             <div className="bg-ink text-paper p-4 flex justify-between items-center">
               <div>
-                <h4 className="font-display font-medium">Ashwin's Assistant</h4>
-                <p className="text-[10px] font-mono uppercase tracking-widest opacity-60">Powered by Gemini</p>
+                <h4 className="font-display font-bold text-sm tracking-tight">Ashwin Shenoy — Executive AI</h4>
+                <p className="text-[9px] font-mono uppercase tracking-widest text-brand font-medium">Digital Twin • QE & AI Leadership</p>
               </div>
               <button 
                 onClick={() => setIsOpen(false)}
-                className="hover:bg-paper/10 p-1 rounded-full transition-colors"
+                className="hover:bg-paper/10 p-1 rounded-full transition-colors text-paper/70 hover:text-paper"
               >
                 <X size={18} />
               </button>
@@ -80,8 +80,27 @@ export default function AIAssistant() {
               className="h-[400px] overflow-y-auto p-4 space-y-4 bg-paper/30 scroll-smooth"
             >
               {messages.length === 0 && (
-                <div className="text-center py-8 px-4 opacity-60 text-sm">
-                  Hi! I'm Ashwin's AI assistant. Ask me anything about his work, skills, or background.
+                <div className="space-y-3 my-2">
+                  <div className="text-center py-5 px-4 text-xs text-ink/80 leading-relaxed bg-paper/80 border border-ink/8 rounded-xl font-sans">
+                    Welcome! I'm Ashwin's AI Digital Twin. Ask me anything about Quality Engineering practice building, AI transformation, leadership philosophy, or domain execution.
+                  </div>
+                  <div className="flex flex-col gap-1.5">
+                    {[
+                      "What is your approach to QE Transformation?",
+                      "How do you apply AI in Quality Engineering?",
+                      "Tell me about your Leadership Philosophy"
+                    ].map((prompt, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => {
+                          setInput(prompt);
+                        }}
+                        className="text-left text-[11px] font-sans px-3 py-2 bg-white border border-ink/10 rounded-lg hover:border-brand/50 hover:text-brand transition-colors text-ink/80 font-medium"
+                      >
+                        → {prompt}
+                      </button>
+                    ))}
+                  </div>
                 </div>
               )}
               {messages.map((m, i) => (

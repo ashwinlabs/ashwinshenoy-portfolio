@@ -12,9 +12,11 @@ export default function Navbar() {
         AS<span className="text-brand">.</span>
       </motion.div>
 
-      <div className="flex gap-8">
-        <NavLink href="#projects">Work</NavLink>
-        <NavLink href="#about">About</NavLink>
+      <div className="flex gap-4 md:gap-8">
+        <NavLink href="#about">Leadership</NavLink>
+        <NavLink href="#philosophy">Philosophy</NavLink>
+        <NavLink href="#impact">Impact</NavLink>
+        <NavLink href="#initiatives">Initiatives</NavLink>
         <NavLink href="#contact">Contact</NavLink>
       </div>
     </nav>
