@@ -25,7 +25,11 @@ export default async function handler(req: any, res: any) {
 
     if (!process.env.GEMINI_API_KEY) {
       return res.status(200).json({ 
-        text: "I am currently running in showcase mode. Please reach out to me directly at ashwinshenoy7@gmail.com or via LinkedIn to discuss Quality Engineering advisory and leadership opportunities!" 
+        text: `Welcome to my digital portfolio.
+
+My AI Digital Twin is currently available for selected demonstrations. If you'd like to discuss Quality Engineering transformation, AI-enabled engineering, delivery strategy, or leadership opportunities, I'd be happy to connect directly.
+
+Please use the "Start a Conversation" section below or reach out via LinkedIn or email.` 
       });
     }
 
