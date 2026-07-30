@@ -114,7 +114,6 @@ export default function App() {
           
           <div className="mt-32 w-full flex flex-col sm:flex-row justify-between items-center gap-2 font-mono text-[10px] uppercase opacity-40">
             <span>© 2026 ASHWIN SHENOY</span>
-            <span>BUILT WITH GOOGLE AI STUDIO</span>
             <span>EXECUTIVE PORTFOLIO</span>
           </div>
         </section>

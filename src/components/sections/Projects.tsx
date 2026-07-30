@@ -3,6 +3,14 @@ import { motion } from "motion/react";
 const INITIATIVES = [
   {
     id: "01",
+    title: "AI-enabled QA Studio",
+    category: "AI Transformation & Engineering Acceleration",
+    challenge: "Slow requirements-to-test translation, manual test case creation, and automation development bottlenecking high-velocity Agile delivery.",
+    contribution: "Architected and deployed an AI-driven QA platform leveraging LLMs to automatically extract test scenarios, generate automation assets, and maintain end-to-end traceability.",
+    outcome: "Accelerated QA asset generation by 50%+ while improving requirement coverage."
+  },
+  {
+    id: "02",
     title: "Enterprise Quality Engineering Transformation",
     category: "Practice Building & Scaling",
     challenge: "Fragmented QA methodologies, high manual testing overhead, and delayed release cycles across global enterprise units.",
@@ -10,20 +18,12 @@ const INITIATIVES = [
     outcome: "Achieved 40%+ reduction in regression execution cycles and enhanced release predictability."
   },
   {
-    id: "02",
-    title: "AI-enabled QA Studio",
-    category: "AI Transformation & Engineering Acceleration",
-    challenge: "Slow requirements-to-test translation and manual test case creation bottlenecking rapid agile delivery sprints.",
-    contribution: "Architected and deployed an AI-driven QA platform leveraging LLMs to automatically extract test scenarios, generate automation assets, and maintain end-to-end traceability.",
-    outcome: "Accelerated QA asset generation by 50%+ while improving requirement coverage."
-  },
-  {
     id: "03",
     title: "Quality Engineering Center of Excellence",
     category: "Governance & Engineering Standards",
     challenge: "Lack of centralized governance, inconsistent testing frameworks, and duplicated efforts across multi-region engineering teams.",
     contribution: "Established enterprise QE CoE, defined unified governance models, reusable automation frameworks, and executive quality dashboards.",
-    outcome: "Unified quality standards across 500+ engineers and eliminated redundant tooling costs."
+    outcome: "Unified quality standards across engineering teams while eliminating redundant tooling and improving operational efficiency."
   },
   {
     id: "04",
