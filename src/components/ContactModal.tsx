@@ -306,18 +306,17 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                 
                 <div>
                   <h3 className="font-display text-2xl font-bold uppercase tracking-tight text-ink">
-                    Message Sent Successfully!
+                    MESSAGE SENT SUCCESSFULLY!
                   </h3>
                   <p className="text-xs md:text-sm text-ink/65 mt-2 max-w-sm mx-auto">
-                    Thank you for reaching out{formData.name ? `, ${formData.name}` : ""}. Your message has been sent directly to Ashwin's inbox.
+                    Thank you for your message. Your inquiry has been sent successfully. I'll review it and get back to you as soon as possible.
                   </p>
                 </div>
 
                 <div className="w-full bg-ink/5 border border-ink/8 text-left rounded-[16px] p-5 space-y-3">
-                  <p className="font-mono text-[9px] uppercase tracking-wider text-ink/50 text-center border-b border-ink/5 pb-2 font-medium">Submitted Message Summary</p>
+                  <p className="font-mono text-[9px] uppercase tracking-wider text-ink/50 text-center border-b border-ink/5 pb-2 font-medium">Submission Summary</p>
                   <div className="space-y-1.5 text-xs text-ink/80 leading-relaxed font-sans max-h-[140px] overflow-y-auto">
                     <p><span className="font-semibold text-ink/60">Sender:</span> {formData.name} ({formData.email})</p>
-                    <p><span className="font-semibold text-ink/60">Recipient:</span> ashwinshenoy7@gmail.com</p>
                     <p><span className="font-semibold text-ink/60">Topic:</span> {useCustomTopic ? formData.customTopic : formData.topic}</p>
                     <p className="italic bg-paper/50 p-2.5 rounded-lg text-ink/75 whitespace-pre-wrap select-text">{formData.message}</p>
                   </div>
