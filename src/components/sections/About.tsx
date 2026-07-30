@@ -40,13 +40,13 @@ export default function About() {
             transition={{ duration: 0.8 }}
             className="aspect-square bg-brand/5 border border-ink/10 rounded-[40px] overflow-hidden group relative shadow-lg"
           >
-            <img 
-              src="/ashwin-shenoy.jpg" 
-              alt="Ashwin Shenoy — Quality Engineering & Technology Leader" 
-              loading="lazy"
-              decoding="async"
-              className="w-full h-full object-cover object-center group-hover:scale-105 transition-all duration-700 ease-out"
-            />
+           <img
+            src="/images/ashwin-shenoy.png"
+            alt="Ashwin Shenoy — Engineering Practice Leader"
+            loading="lazy"
+            decoding="async"
+            className="w-full h-full object-cover object-center group-hover:scale-105 transition-all duration-700 ease-out"
+          />
             <div className="absolute inset-0 bg-gradient-to-t from-ink/30 via-transparent to-transparent pointer-events-none" />
           </motion.div>
 
