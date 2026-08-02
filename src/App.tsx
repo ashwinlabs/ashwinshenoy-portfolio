@@ -10,113 +10,216 @@ import About from "./components/sections/About";
 import LeadershipPhilosophy from "./components/sections/LeadershipPhilosophy";
 import ImpactHighlights from "./components/sections/ImpactHighlights";
 import Skills from "./components/sections/Skills";
+import LatestInsights from "./components/sections/LatestInsights";
+import InsightsHub from "./components/insights/InsightsHub";
+import ArticleDetail from "./components/insights/ArticleDetail";
 import AIAssistant from "./components/AIAssistant";
 import ContactModal from "./components/ContactModal";
 import { Analytics } from "@vercel/analytics/react";
 import { motion } from "motion/react";
 import { Youtube, Linkedin, Instagram, Mail } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
+import { updateMetaTags } from "./utils/seo";
+
+type RouteState = {
+  view: "home" | "insights" | "article";
+  slug?: string;
+};
 
 export default function App() {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
+  // Parse path to route
+  const getRouteFromLocation = (): RouteState => {
+    const path = window.location.pathname;
+    if (path.startsWith("/insights/")) {
+      const slug = path.replace("/insights/", "").replace(/\/$/, "");
+      if (slug) return { view: "article", slug };
+    }
+    if (path === "/insights" || path === "/insights/") {
+      return { view: "insights" };
+    }
+    return { view: "home" };
+  };
+
+  const [route, setRoute] = useState<RouteState>(getRouteFromLocation);
+
+  // Sync route on popstate (browser back/forward)
+  useEffect(() => {
+    const handlePopState = () => {
+      const newRoute = getRouteFromLocation();
+      setRoute(newRoute);
+    };
+
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, []);
+
+  // Update SEO meta tags according to active route
+  useEffect(() => {
+    if (route.view === "home") {
+      updateMetaTags({
+        title: "Ashwin Shenoy | Engineering Practice Leader",
+        description: "Engineering Practice Leader with 16+ years of experience in Quality Engineering, Delivery Transformation, AI-enabled Engineering, Solution Strategy and GTM Enablement."
+      });
+    } else if (route.view === "insights") {
+      updateMetaTags({
+        title: "Ashwin Shenoy | Insights & Thought Leadership",
+        description: "A collection of articles, perspectives and practical experiences on Quality Engineering, AI, Automation, Engineering Leadership and Enterprise Delivery."
+      });
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, [route]);
+
+  // Route handlers
+  const navigateToHome = useCallback((anchorId?: string) => {
+    setRoute({ view: "home" });
+    window.history.pushState(null, "", "/");
+    if (anchorId) {
+      setTimeout(() => {
+        const el = document.getElementById(anchorId.replace("#", ""));
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 100);
+    } else {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, []);
+
+  const navigateToInsights = useCallback((slug?: string) => {
+    if (slug) {
+      setRoute({ view: "article", slug });
+      window.history.pushState(null, "", `/insights/${slug}`);
+    } else {
+      setRoute({ view: "insights" });
+      window.history.pushState(null, "", "/insights");
+    }
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
   return (
     <div className="relative selection:bg-brand selection:text-white overflow-x-hidden w-full">
       <Analytics />
-      <Navbar />
+      <Navbar
+        currentRoute={route.view}
+        onNavigateHome={navigateToHome}
+        onNavigateInsights={() => navigateToInsights()}
+      />
       
       <main>
-        <Hero />
-        <About />
-        <LeadershipPhilosophy />
-        <ImpactHighlights />
-        <Projects />
-        <Skills />
-        
-        {/* Contact Section */}
-        <section id="contact" className="py-32 px-6 md:px-24 border-t border-ink/10 flex flex-col items-center text-center">
-          <span className="font-mono text-xs uppercase tracking-widest text-brand font-medium mb-6 block">
-            Initiate Advisory & Leadership Engagement
-          </span>
-          <h2 className="font-display text-4xl md:text-7xl font-bold uppercase tracking-tight mb-8 max-w-4xl leading-[0.95]">
-            Let's Build Better <br/> <span className="text-brand">Engineering Organizations</span>
-          </h2>
-          <p className="max-w-2xl text-sm md:text-base font-light text-ink/75 leading-relaxed mb-12 font-sans">
-            Whether you're looking to modernize Quality Engineering, accelerate delivery, build AI-enabled engineering capabilities, establish engineering governance, or drive enterprise transformation, I'd welcome the opportunity to connect.
-          </p>
-          <motion.button
-            onClick={() => setIsContactModalOpen(true)}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="px-12 py-6 min-h-[56px] bg-ink text-paper rounded-[20px] font-display text-lg md:text-xl uppercase tracking-widest hover:bg-brand transition-colors mb-16 cursor-pointer shadow-lg focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none"
-            id="start_conversation_trigger_btn"
-            aria-label="Start a conversation with Ashwin Shenoy"
-          >
-            Start a Conversation
-          </motion.button>
+        {route.view === "home" && (
+          <>
+            <Hero />
+            <About />
+            <LeadershipPhilosophy />
+            <ImpactHighlights />
+            <Projects />
+            <Skills />
+            <LatestInsights onNavigateToInsights={navigateToInsights} />
+            
+            {/* Contact Section */}
+            <section id="contact" className="py-32 px-6 md:px-24 border-t border-ink/10 flex flex-col items-center text-center">
+              <span className="font-mono text-xs uppercase tracking-widest text-brand font-medium mb-6 block">
+                Initiate Advisory & Leadership Engagement
+              </span>
+              <h2 className="font-display text-4xl md:text-7xl font-bold uppercase tracking-tight mb-8 max-w-4xl leading-[0.95]">
+                Let's Build Better <br/> <span className="text-brand">Engineering Organizations</span>
+              </h2>
+              <p className="max-w-2xl text-sm md:text-base font-light text-ink/75 leading-relaxed mb-12 font-sans">
+                Whether you're looking to modernize Quality Engineering, accelerate delivery, build AI-enabled engineering capabilities, establish engineering governance, or drive enterprise transformation, I'd welcome the opportunity to connect.
+              </p>
+              <motion.button
+                onClick={() => setIsContactModalOpen(true)}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-12 py-6 min-h-[56px] bg-ink text-paper rounded-[20px] font-display text-lg md:text-xl uppercase tracking-widest hover:bg-brand transition-colors mb-16 cursor-pointer shadow-lg focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none"
+                id="start_conversation_trigger_btn"
+                aria-label="Start a conversation with Ashwin Shenoy"
+              >
+                Start a Conversation
+              </motion.button>
 
-          {/* Social and Email Connections */}
-          <div className="flex flex-wrap gap-6 justify-center items-center">
-            <motion.a
-              href="https://www.linkedin.com/in/ashwinshenoy7/"
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ scale: 1.1, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-              className="p-4 rounded-full border border-ink/10 hover:border-brand/40 text-ink/60 hover:text-brand bg-ink/5 hover:bg-brand/5 transition-all flex items-center justify-center group focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none"
-              title="LinkedIn"
-              aria-label="Ashwin Shenoy on LinkedIn"
-              id="contact_linkedin"
-            >
-              <Linkedin className="w-6 h-6 transition-transform group-hover:scale-105" />
-            </motion.a>
+              {/* Social and Email Connections */}
+              <div className="flex flex-wrap gap-6 justify-center items-center">
+                <motion.a
+                  href="https://www.linkedin.com/in/ashwinshenoy7/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.1, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="p-4 rounded-full border border-ink/10 hover:border-brand/40 text-ink/60 hover:text-brand bg-ink/5 hover:bg-brand/5 transition-all flex items-center justify-center group focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none"
+                  title="LinkedIn"
+                  aria-label="Ashwin Shenoy on LinkedIn"
+                  id="contact_linkedin"
+                >
+                  <Linkedin className="w-6 h-6 transition-transform group-hover:scale-105" />
+                </motion.a>
 
-            <motion.a
-              href="https://www.youtube.com/@ashwinshenoy7"
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ scale: 1.1, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-              className="p-4 rounded-full border border-ink/10 hover:border-brand/40 text-ink/60 hover:text-brand bg-ink/5 hover:bg-brand/5 transition-all flex items-center justify-center group focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none"
-              title="YouTube"
-              aria-label="Ashwin Shenoy on YouTube"
-              id="contact_youtube"
-            >
-              <Youtube className="w-6 h-6 transition-transform group-hover:scale-105" />
-            </motion.a>
+                <motion.a
+                  href="https://www.youtube.com/@ashwinshenoy7"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.1, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="p-4 rounded-full border border-ink/10 hover:border-brand/40 text-ink/60 hover:text-brand bg-ink/5 hover:bg-brand/5 transition-all flex items-center justify-center group focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none"
+                  title="YouTube"
+                  aria-label="Ashwin Shenoy on YouTube"
+                  id="contact_youtube"
+                >
+                  <Youtube className="w-6 h-6 transition-transform group-hover:scale-105" />
+                </motion.a>
 
-            <motion.a
-              href="https://www.instagram.com/ashwinshenoy7/"
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ scale: 1.1, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-              className="p-4 rounded-full border border-ink/10 hover:border-brand/40 text-ink/60 hover:text-brand bg-ink/5 hover:bg-brand/5 transition-all flex items-center justify-center group focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none"
-              title="Instagram"
-              aria-label="Ashwin Shenoy on Instagram"
-              id="contact_instagram"
-            >
-              <Instagram className="w-6 h-6 transition-transform group-hover:scale-105" />
-            </motion.a>
+                <motion.a
+                  href="https://www.instagram.com/ashwinshenoy7/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.1, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="p-4 rounded-full border border-ink/10 hover:border-brand/40 text-ink/60 hover:text-brand bg-ink/5 hover:bg-brand/5 transition-all flex items-center justify-center group focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none"
+                  title="Instagram"
+                  aria-label="Ashwin Shenoy on Instagram"
+                  id="contact_instagram"
+                >
+                  <Instagram className="w-6 h-6 transition-transform group-hover:scale-105" />
+                </motion.a>
 
-            <motion.a
-              href="mailto:ashwinshenoy7@gmail.com"
-              whileHover={{ scale: 1.1, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-              className="p-4 rounded-full border border-ink/10 hover:border-brand/40 text-ink/60 hover:text-brand bg-ink/5 hover:bg-brand/5 transition-all flex items-center justify-center group focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none"
-              title="Email"
-              aria-label="Send email to Ashwin Shenoy"
-              id="contact_gmail"
-            >
-              <Mail className="w-6 h-6 transition-transform group-hover:scale-105" />
-            </motion.a>
-          </div>
-          
-          <div className="mt-32 w-full flex flex-col sm:flex-row justify-between items-center gap-2 font-mono text-[10px] uppercase opacity-40">
-            <span>© 2026 ASHWIN SHENOY</span>
-            <span>EXECUTIVE PORTFOLIO</span>
-          </div>
-        </section>
+                <motion.a
+                  href="mailto:ashwinshenoy7@gmail.com"
+                  whileHover={{ scale: 1.1, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="p-4 rounded-full border border-ink/10 hover:border-brand/40 text-ink/60 hover:text-brand bg-ink/5 hover:bg-brand/5 transition-all flex items-center justify-center group focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none"
+                  title="Email"
+                  aria-label="Send email to Ashwin Shenoy"
+                  id="contact_gmail"
+                >
+                  <Mail className="w-6 h-6 transition-transform group-hover:scale-105" />
+                </motion.a>
+              </div>
+              
+              <div className="mt-32 w-full flex flex-col sm:flex-row justify-between items-center gap-2 font-mono text-[10px] uppercase opacity-40">
+                <span>© 2026 ASHWIN SHENOY</span>
+                <span>EXECUTIVE PORTFOLIO</span>
+              </div>
+            </section>
+          </>
+        )}
+
+        {route.view === "insights" && (
+          <InsightsHub
+            onSelectArticle={(slug) => navigateToInsights(slug)}
+            onBackToHome={() => navigateToHome()}
+          />
+        )}
+
+        {route.view === "article" && route.slug && (
+          <ArticleDetail
+            slug={route.slug}
+            onNavigateToInsights={() => navigateToInsights()}
+            onSelectArticle={(slug) => navigateToInsights(slug)}
+            onOpenContactModal={() => setIsContactModalOpen(true)}
+          />
+        )}
       </main>
 
       <AIAssistant />
@@ -124,3 +227,4 @@ export default function App() {
     </div>
   );
 }
+
