@@ -30,6 +30,8 @@ export default function Navbar({
   const portalRef = useRef<HTMLDivElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
+  const [isDarkBg, setIsDarkBg] = useState(false);
+
   // Calculate coordinates for portal dropdown
   const updateCoords = useCallback(() => {
     if (dropdownRef.current) {
@@ -40,6 +42,37 @@ export default function Navbar({
       });
     }
   }, []);
+
+  // Detect whether section behind navbar top center is dark or light
+  useEffect(() => {
+    const handleCheckBackground = () => {
+      if (currentRoute !== "home") {
+        setIsDarkBg(true);
+        return;
+      }
+
+      const sampleX = window.innerWidth / 2;
+      const sampleY = 32;
+      const elements = document.elementsFromPoint(sampleX, sampleY);
+
+      // Find the first element beneath the navbar
+      const underlyingEl = elements.find(
+        (el) => !el.closest("nav") && el.tagName !== "HTML" && el.tagName !== "BODY"
+      );
+
+      if (underlyingEl) {
+        const isDark = !!underlyingEl.closest(".bg-ink, #initiatives, #latest-insights");
+        setIsDarkBg(isDark);
+        return;
+      }
+
+      setIsDarkBg(false);
+    };
+
+    window.addEventListener("scroll", handleCheckBackground, { passive: true });
+    handleCheckBackground();
+    return () => window.removeEventListener("scroll", handleCheckBackground);
+  }, [currentRoute]);
 
   useEffect(() => {
     if (isOpen) {
@@ -146,7 +179,9 @@ export default function Navbar({
   return (
     <>
       <nav 
-        className="fixed top-0 left-0 w-full z-40 p-6 md:px-24 flex justify-between items-center mix-blend-difference text-paper" 
+        className={`fixed top-0 left-0 w-full z-40 p-6 md:px-24 flex justify-between items-center transition-colors duration-200 ${
+          isDarkBg ? "text-paper" : "text-ink"
+        }`} 
         aria-label="Main Navigation"
       >
         {/* Brand Logo */}
@@ -158,7 +193,7 @@ export default function Navbar({
           className="font-display text-2xl font-black uppercase tracking-tighter focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none rounded-sm cursor-pointer"
           aria-label="Ashwin Shenoy Home"
         >
-          AS<span style={{ mixBlendMode: "normal" }} className="text-[#F27D26]">.</span>
+          AS<span className="text-[#F27D26]">.</span>
         </motion.a>
 
         {/* Navigation Group Container */}
@@ -181,7 +216,6 @@ export default function Navbar({
             >
               <span>PROFILE</span>
               <ChevronDown
-                style={{ mixBlendMode: "normal" }}
                 className={`w-3.5 h-3.5 text-[#F27D26] transition-transform duration-200 ${
                   isOpen ? "rotate-180" : ""
                 }`}
