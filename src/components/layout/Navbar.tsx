@@ -35,7 +35,7 @@ export default function Navbar({
     if (dropdownRef.current) {
       const rect = dropdownRef.current.getBoundingClientRect();
       setMenuCoords({
-        top: rect.bottom + 8,
+        top: Math.round(rect.bottom) + 1,
         left: Math.max(16, rect.left),
       });
     }
@@ -158,7 +158,7 @@ export default function Navbar({
           className="font-display text-2xl font-black uppercase tracking-tighter focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none rounded-sm cursor-pointer"
           aria-label="Ashwin Shenoy Home"
         >
-          AS<span className="text-brand">.</span>
+          AS<span style={{ mixBlendMode: "normal" }} className="text-[#F27D26]">.</span>
         </motion.a>
 
         {/* Navigation Group Container */}
@@ -181,7 +181,8 @@ export default function Navbar({
             >
               <span>PROFILE</span>
               <ChevronDown
-                className={`w-3.5 h-3.5 text-brand transition-transform duration-200 ${
+                style={{ mixBlendMode: "normal" }}
+                className={`w-3.5 h-3.5 text-[#F27D26] transition-transform duration-200 ${
                   isOpen ? "rotate-180" : ""
                 }`}
               />
@@ -210,16 +211,16 @@ export default function Navbar({
             ref={portalRef}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
-            initial={{ opacity: 0, y: 6, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 4, scale: 0.98 }}
-            transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 6 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
             style={{
               position: "fixed",
               top: `${menuCoords.top}px`,
               left: `${menuCoords.left}px`,
             }}
-            className="w-52 bg-[#141414] border border-white/15 rounded-2xl p-2.5 shadow-[0_20px_50px_rgba(0,0,0,0.7)] backdrop-blur-2xl z-[100] flex flex-col gap-1 text-paper"
+            className="w-[176px] bg-[#141414]/95 border border-white/10 rounded-xl p-1.5 shadow-[0_6px_18px_rgba(0,0,0,0.20)] backdrop-blur-xl z-[100] flex flex-col gap-1 text-paper"
           >
             {PROFILE_ITEMS.map((item) => {
               const isItemActive = currentRoute === "home" && activeSection === item.id;
@@ -227,15 +228,15 @@ export default function Navbar({
                 <button
                   key={item.id}
                   onClick={(e) => handleItemClick(e, item.id)}
-                  className={`w-full text-left px-3.5 py-2.5 rounded-xl font-mono text-[11px] uppercase tracking-[0.15em] transition-all flex items-center justify-between cursor-pointer focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none ${
+                  className={`w-full text-left px-3 py-2.5 rounded-lg font-mono text-[10.5px] uppercase tracking-[0.12em] transition-all duration-200 flex items-center justify-between cursor-pointer focus-visible:ring-2 focus-visible:ring-brand focus-visible:outline-none ${
                     isItemActive
-                      ? "text-[#F27D26] font-bold bg-[#F27D26]/12 border border-[#F27D26]/30 shadow-sm"
-                      : "text-paper/80 hover:text-[#F27D26] hover:bg-[#F27D26]/10 hover:border-white/5 border border-transparent"
+                      ? "text-[#F27D26] font-bold bg-[#F27D26]/[0.08] border border-[#F27D26]/30 shadow-2xs"
+                      : "text-paper/80 hover:text-[#F27D26] hover:bg-[#F27D26]/[0.06] hover:border-[#F27D26]/15 border border-transparent"
                   }`}
                 >
                   <span>{item.label}</span>
                   {isItemActive && (
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#F27D26] shrink-0 shadow-[0_0_8px_rgba(242,125,38,0.8)]"></span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#F27D26] shrink-0 shadow-[0_0_6px_rgba(242,125,38,0.6)]"></span>
                   )}
                 </button>
               );
